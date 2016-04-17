@@ -16,7 +16,7 @@ var app = http.createServer(function (request, response) {
         response.write(data);
         response.end();
     });
-}).listen(1337);
+}).listen( proces.env.PORT || 1337);
 
 var io = require('socket.io').listen(app);
 

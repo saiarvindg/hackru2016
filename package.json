@@ -1,0 +1,19 @@
+{
+  "name": "hackru2016",
+  "version": "1.0.0",
+  "description": "Play two-player Rock, Paper, Scissors online, across the world, in real-time using gesture detection.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saiarvindg/hackru2016.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saiarvindg/hackru2016/issues"
+  },
+  "homepage": "https://github.com/saiarvindg/hackru2016#readme"
+}
