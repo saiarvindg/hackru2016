@@ -76,20 +76,6 @@ function addP2Move(data){
     console.log("move letter: " + player2Move);
 }
 
-/*
-function parse_and_add_move(data){
-    var move = data["message"];
-    var name = data["username"];
-    console.log("move: " + move + " name: "+ name);
-    if(move.val == 0){
-        moves[name] = "r";
-    }else if(move.val > 0 && move.val < 3){
-        moves[name] = "s";
-    }else{
-        moves[name] = "p";
-    }
-}
-*/
 
 function calc_win(){
     var winner = "The winner is: "
