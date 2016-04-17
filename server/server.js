@@ -23,11 +23,11 @@ var io = require('socket.io').listen(app);
 io.sockets.on('connection', function (socket) {
     socket.on('message_to_server', function (data) {
         if(movesLent == 0){
-            console.log(data);
+            //console.log(data);
             addP1Move(data);
             movesLent++;
         }else if(movesLent == 1){
-            console.log(data);
+            //console.log(data);
             addP2Move(data);
             movesLent++;
             calc_win();
@@ -51,7 +51,7 @@ function clear(){
 function addP1Move(data){
     var move = data["message"];
     player1Name = data["username"];
-    console.log("move: " + move + " name: "+ player1Name);
+    //console.log("move: " + move + " name: "+ player1Name);
     if(move == 0){
         player1Move = "r";
     }else if(move == 1 || move == 2){
@@ -59,13 +59,13 @@ function addP1Move(data){
     }else{
        player1Move = "p";
     }
-    console.log("move letter: " + player1Move);
+    //console.log("move letter: " + player1Move);
 }
 
 function addP2Move(data){
     var move = data["message"];
     player2Name = data["username"];
-    console.log("move: " + move + " name: "+ player2Name);
+    //console.log("move: " + move + " name: "+ player2Name);
     if(move == 0){
         player2Move = "r";
     }else if(move == 1 || move == 2){
@@ -73,7 +73,7 @@ function addP2Move(data){
     }else{
        player2Move = "p";
     }
-    console.log("move letter: " + player2Move);
+    //console.log("move letter: " + player2Move);
 }
 
 
