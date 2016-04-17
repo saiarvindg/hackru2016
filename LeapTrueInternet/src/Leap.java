@@ -11,6 +11,28 @@ import java.lang.Math;
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 
+class Leap {
+    public static void main(String[] args) {
+        // Create a sample listener and controller
+        SampleListener listener = new SampleListener();
+        Controller controller = new Controller();
+
+        // Have the sample listener receive events from the controller
+        controller.addListener(listener);
+
+        // Keep this process running until Enter is pressed
+        System.out.println("Press Enter to quit...");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Remove the sample listener when done
+        controller.removeListener(listener);
+    }
+}
+
 class SampleListener extends Listener {
 	
     public void onInit(Controller controller) {
@@ -19,14 +41,10 @@ class SampleListener extends Listener {
 
     public void onConnect(Controller controller) {
         System.out.println("Connected");
-        controller.enableGesture(Gesture.Type.TYPE_SWIPE);
         controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-        controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
-        controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
     }
 
     public void onDisconnect(Controller controller) {
-        //Note: not dispatched when running in a debugger.
         System.out.println("Disconnected");
     }
 
@@ -35,10 +53,6 @@ class SampleListener extends Listener {
     }
 
     public void onFrame(Controller controller) {
-    	
-//		Hub hub = new Hub("");
-//		Myo myo = hub.waitForMyo(10000);
-		int count  = 0;
 		
         // Get the most recent frame and report some basic information
         Frame frame = controller.frame();
@@ -49,9 +63,9 @@ class SampleListener extends Listener {
 //                         + ", tools: " + frame.tools().count()
 //                         + ", gestures " + frame.gestures().count());
 
-        //Get hands
+        // Get hands
         for(Hand hand : frame.hands()) {
-            String handType = hand.isLeft() ? "Left hand" : "Right hand";
+//            String handType = hand.isLeft() ? "Left hand" : "Right hand";
 //            System.out.println("  " + handType + ", id: " + hand.id()
 //                             + ", palm position: " + hand.palmPosition());
 
@@ -85,22 +99,14 @@ class SampleListener extends Listener {
 //                                     + ", direction: " + bone.direction());
 //                }
             	
-//            	System.out.println(finger.type());
-            	
+            	// Get only the index finger
             	if (finger.type().toString().equals("TYPE_INDEX")) {
             		
-//            		if (count++ > 10) {
-//            			count = 0;
-//            			myo.vibrate(0);
-//            		}
-            		
-//            		System.out.println("start: " + finger.bone(Bone.Type.TYPE_DISTAL).prevJoint());
-//                    System.out.println("end: " + finger.bone(Bone.Type.TYPE_DISTAL).nextJoint());
-//                    System.out.println("direction: " + finger.bone(Bone.Type.TYPE_DISTAL).direction());
-            	
+            		// Get the tip of the index finger
             		float x = finger.bone(Bone.Type.TYPE_DISTAL).nextJoint().getX();
             		float y = finger.bone(Bone.Type.TYPE_DISTAL).nextJoint().getY();
             		
+            		// Divide into subsections
             		if (x < 0) {
             			
             			if (y < 166) {
@@ -130,12 +136,13 @@ class SampleListener extends Listener {
         }
 
         // Get tools
-        for(Tool tool : frame.tools()) {
-            System.out.println("  Tool id: " + tool.id()
-                             + ", position: " + tool.tipPosition()
-                             + ", direction: " + tool.direction());
-        }
+//        for(Tool tool : frame.tools()) {
+//            System.out.println("  Tool id: " + tool.id()
+//                             + ", position: " + tool.tipPosition()
+//                             + ", direction: " + tool.direction());
+//        }
 
+        // Get gesture information
         GestureList gestures = frame.gestures();
         for (int i = 0; i < gestures.count(); i++) {
             Gesture gesture = gestures.get(i);
@@ -201,24 +208,4 @@ class SampleListener extends Listener {
     }
 }
 
-class Sample {
-    public static void main(String[] args) {
-        // Create a sample listener and controller
-        SampleListener listener = new SampleListener();
-        Controller controller = new Controller();
 
-        // Have the sample listener receive events from the controller
-        controller.addListener(listener);
-
-        // Keep this process running until Enter is pressed
-        System.out.println("Press Enter to quit...");
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Remove the sample listener when done
-        controller.removeListener(listener);
-    }
-}
