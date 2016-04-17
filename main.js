@@ -42,7 +42,7 @@ socketio.on("message_to_client", function(data) {
 	
 	var item = document.getElementById("chatlog").innerHTML + data['message'] + "<br\>";
 	
-	document.getElementById("chatlog").innerHTML = "<li>" + item + "<\li>";
+	document.getElementById("chatlog").innerHTML = item;
 
 });
 
