@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Online Gesture-Controlled Rock, Paper, Scissors!">
+    <meta name="author" content="Nisarg Patel, SaiArvind Ganganapalle">
+
+    <title>Rock, Paper, Scissors, Leap</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+	
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+
+</head>
+
+<body onload="init();">
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>Rock, Paper, Scissors, Leap</h1>
+                <p class="lead">Online Gesture-Controlled Rock, Paper, Scissors!</p>
+				
+				<div id="connection">WebSocket not connected</div>
+				<h3 id="msg">Move hand in front of sensor!</h2>
+
+            </div>
+        </div>
+        <!-- /.row -->
+		
+		<h3>Username:</h2>
+		<input type="text" value= "frog" id="user"></input>
+
+		<h4> Finger extended: </h4>
+
+		<ol>
+			<li id="finger1">false</li>
+			<li id="finger2">false</li>
+			<li id="finger3">false</li>
+			<li id="finger4">false</li>
+			<li id="finger5">false</li>
+		</ol>
+
+		<div id="output" style="visibility:hidden">Results:</div>
+		<hr/>
+
+		<p id="chatlog"></p>
+
+    </div>
+    <!-- /.container -->
+	
+	<ul class="col-lg-12 text-center list-unstyled">
+        <li>Nisarg Patel</li>
+        <li>SaiArvind Ganganapalle</li>
+    </ul>
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
