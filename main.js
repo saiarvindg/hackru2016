@@ -1,5 +1,5 @@
 //var url = "127.0.0.1:1337";
-var url = "http://da87c870.ngrok.io/";
+var url = "https://rock-paper-scissors-leap.herokuapp.com/";
 
 var socketio = io.connect(url);
 
@@ -20,7 +20,7 @@ var msgSent = false;
 socketio.on("message_to_client", function(data) {
 
 	// reset message
-	document.getElementById("msg").innerHTML = data['message'] == "It's a tie?";
+	document.getElementById("msg").innerHTML = data['message'];
 
 	setTimeout(function() {
 
@@ -37,7 +37,12 @@ socketio.on("message_to_client", function(data) {
 	// print result
 	console.log(data);
 	document.getElementById("output").style.visibility = "visible"
-	document.getElementById("chatlog").innerHTML = ( document.getElementById("chatlog").innerHTML + data['message'] + "<hr/>");
+	
+	console.log(document.getElementById("chatlog").innerHTML);
+	
+	var item = document.getElementById("chatlog").innerHTML + data['message'] + "<br\>";
+	
+	document.getElementById("chatlog").innerHTML = "<li>" + item + "<\li>";
 
 });
 
@@ -64,6 +69,7 @@ function init() {
 
     // On successful connection
     ws.onopen = function(event) {
+		
         var enableMessage = JSON.stringify({enableGestures: true});
         ws.send(enableMessage); // Enable gestures
         ws.send(JSON.stringify({focused: true})); // claim focus
@@ -76,9 +82,7 @@ function init() {
                                ws.send(JSON.stringify({focused: false})); // relinquish focus
                          });
 
-        document.getElementById("main").style.visibility = "visible";
-        document.getElementById("connection").innerHTML = "WebSocket connection open!";
-		document.getElementById("connection").style.visibility = "hidden"
+        //document.getElementById("connection").innerHTML = "WebSocket connection open!";
     };
 
     // On message received
@@ -103,7 +107,7 @@ function init() {
         window.removeListener("focus", focusListener);
         window.removeListener("blur", blurListener);
         document.getElementById("main").style.visibility = "hidden";
-        document.getElementById("connection").innerHTML = "WebSocket connection closed";
+        //document.getElementById("connection").innerHTML = "WebSocket connection closed";
     }
 
     // On socket error
@@ -117,20 +121,28 @@ function init() {
 function parseFrame(data) {
 
 	var num = 0;
+	
+	if (msgSent == true) {
+		return;
+	}
 
-	if (msgSent == true || data.hands == undefined || data.hands.length == 0) {
+	if (data.hands == undefined || data.hands.length == 0) {
 		document.getElementById("finger1").innerHTML = "false";
 		document.getElementById("finger2").innerHTML = "false";
 		document.getElementById("finger3").innerHTML = "false";
 		document.getElementById("finger4").innerHTML = "false";
 		document.getElementById("finger5").innerHTML = "false";
+		
+		count = 0;
+		document.getElementById("image").src = "images/question.png";
+		document.getElementById("prog").value = count.toString();
 		return;
 	}
 
 	// reset message
 	document.getElementById("msg").innerHTML = "Keep steady!";
 
-	//console.log("called");
+	// determine number of fingers
 	pointables = data.pointables;
 	if (pointables != undefined && pointables[0] != undefined) {
 		document.getElementById("finger1").innerHTML = data.pointables[0].extended;
@@ -140,7 +152,7 @@ function parseFrame(data) {
 	} else {
 		document.getElementById("finger1").innerHTML = "false";
 	}
-
+	
 	if (pointables != undefined && pointables[1] != undefined) {
 		document.getElementById("finger2").innerHTML = data.pointables[1].extended;
 		if (data.pointables[1].extended) {
@@ -178,7 +190,22 @@ function parseFrame(data) {
 	}
 
 	console.log(num);
-	if (num == numFingers) {
+	
+	// update the progress bar
+	//progress(count);
+	document.getElementById("prog").value = count.toString();
+	
+	if (num == 0) {
+		document.getElementById("image").src = "images/rock.jpg"
+	} else if (num <= 2) {
+		document.getElementById("image").src = "images/scissors.png"
+	} else {
+		document.getElementById("image").src = "images/paper.jpg"
+	}
+	
+	if ( (num == 0 && numFingers == 0) || 
+		 ((num >= 1 && num <= 2) && (numFingers >= 1 && numFingers <= 2)) ||
+		 (num >= 3 && numFingers >= 3) ) {
 		count++;
 		if (count == 200) {
 			document.getElementById("msg").innerHTML = "Message sent!";
@@ -193,4 +220,26 @@ function parseFrame(data) {
 		numFingers = num;
 		count = 0;
 	}
+}
+
+// update progress bar
+function progress(num) {
+    var elem = document.getElementById("myBar");
+	
+	norm = num / 3.0;
+	
+	elem.style.width = norm + '%';
+	
+	/*
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        } else {
+            width++; 
+            elem.style.width = width + '%'; 
+        }
+    }
+	*/
 }

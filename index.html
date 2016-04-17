@@ -16,9 +16,23 @@
 
     <!-- Custom CSS -->
     <style>
+	
+	#myProgress {
+		position: relative;
+		width: 100%;
+		height: 30px;
+		background-color: LightGray;
+	}
+
+	#myBar {
+		position: absolute;
+		width: 1%;
+		height: 100%;
+		background-color: green;
+	}
+
     body {
-        padding-top: 70px;
-        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        padding-top: 50px;
     }
     </style>
 	
@@ -37,33 +51,56 @@
                 <h1>Rock, Paper, Scissors, Leap</h1>
                 <p class="lead">Online Gesture-Controlled Rock, Paper, Scissors!</p>
 				
-				<div id="connection">WebSocket not connected</div>
-				<h3 id="msg">Move hand in front of sensor!</h2>
-
+				<!--div id="connection" style="visibility:hidden">WebSocket not connected</div-->
+				
             </div>
         </div>
         <!-- /.row -->
 		
-		<h3>Username:</h2>
-		<input type="text" value= "frog" id="user"></input>
+		<h3 id="msg" class="text-center">Move hand in front of sensor to get started!</h2>
+		
+		<br/>
+		
+		<h4 class="text-center">Enter Username:</h4>
+		<div class="text-center">
+			<input type="text" value= "frog" id="user" class="text-center"></input>
+		</div>
+		
+		<br/>
 
-		<h4> Finger extended: </h4>
-
-		<ol>
+		<h4> Extended fingers: </h4>
+		
+		<ol style="display:inline-block" >
 			<li id="finger1">false</li>
 			<li id="finger2">false</li>
 			<li id="finger3">false</li>
 			<li id="finger4">false</li>
 			<li id="finger5">false</li>
 		</ol>
+		
+		<img id="image" src="images/question.png" height="100" width="100" align="right" style="display:inline-block"></img>
+		
+		<br/>
+		
+		<!--div id="myProgress">
+			<div id="myBar"></div>
+		</div-->
+		
+		<div class="text-center">
+			<progress id="prog" value="0" max="200"></progress>
+		</div>
 
-		<div id="output" style="visibility:hidden">Results:</div>
+		<br/>
+		
+		<h4 id="output" style="visibility:hidden">Results:</div>
+		<ol id="chatlog"></ol>
+				
 		<hr/>
-
-		<p id="chatlog"></p>
 
     </div>
     <!-- /.container -->
+	
+	<h4 class="text-center">Contributers:</h4>
 	
 	<ul class="col-lg-12 text-center list-unstyled">
         <li>Nisarg Patel</li>
